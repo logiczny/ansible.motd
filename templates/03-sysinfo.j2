@@ -22,32 +22,6 @@ echo "$UPTIME - since $UPSINCE"
 echo
 echo "Total: $TOTALMEM / Free: $MEMFREEREAL / Swap: $SWAPUSAGE"
 echo
-  {% if ansible_interfaces is defined %}
-echo "Interfaces:"
-  {%   for int in ansible_interfaces %}
-  {%     if "veth" not in int %}
-  {%     if "br" not in int %}
-echo " Interface: {{ int }}"
-  {%         if hostvars[inventory_hostname]['ansible_'+int] is defined %}
-  {%           if hostvars[inventory_hostname]['ansible_'+int]['ipv4'] is defined %}
-  {%             if hostvars[inventory_hostname]['ansible_'+int]['ipv4']['address'] is defined %}
-echo "  ip: {{ hostvars[inventory_hostname]['ansible_'+int]['ipv4']['address'] }}"
-  {%               if hostvars[inventory_hostname]['ansible_'+int]['ipv4_secondaries'] is defined %}
-  {%                 for secondaries in hostvars[inventory_hostname]['ansible_'+int]['ipv4_secondaries']  %}
-echo "      {{ secondaries['address'] }}"
-  {%                 endfor %}
-  {%               endif %}
-  {%             endif %}
-  {%           endif %}
-  {%           if hostvars[inventory_hostname]['ansible_'+int]['macaddress'] is defined %}
-echo "  mac: {{ hostvars[inventory_hostname]['ansible_'+int]['macaddress'] }}"
-  {%           endif %}     
-  {%         endif %}
-  {%       endif %}
-  {%     endif %}
-  {%   endfor %}
-  {% endif %}
-echo
 echo "$DF"
 echo
 echo "Users:"
